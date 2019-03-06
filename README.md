@@ -99,6 +99,9 @@ A: FileWave would like to improve the ability of managed service providers to se
 Q: Who can use it?  
 A: The intent is to target Managed Service Providers, but there isn’t a technical limitation that enforces this. Anyone who needs to handle multiple FileWave instances can benefit from using the portal.
 
+Q: Is it possible to have multiple user accounts to access the portal?  
+A: Super user can create accounts for the other users.
+
 Q: How do I add my FileWave Servers to the portal?  
 A: Go to **_Servers_**, press **_Add Server_** and enter all required information.
 
