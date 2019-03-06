@@ -1,0 +1,52 @@
+version: '3'
+services:
+  gunicorn:
+    image: filewave/msp_portal:latest
+    restart: always
+    depends_on:
+      - "redis"
+    links:
+      - "redis:redis"
+    ports:
+      - "${MSP_PORTAL_PORT:?MSP_PORTAL_PORT is required}:${MSP_PORTAL_PORT:?MSP_PORTAL_PORT is required}"
+    volumes:
+      - ${MSP_PORTAL_DB_HOST_LOCATION:?MSP_PORTAL_DB_HOST_LOCATION is required}:/app/msp_portal/msp_portal_db/
+    environment:
+      - DJANGO_SETTINGS_MODULE=${MSP_PORTAL_DJANGO_SETTINGS_MODULE:?MSP_PORTAL_DJANGO_SETTINGS_MODULE is required}
+      - MSP_PORTAL_PORT=${MSP_PORTAL_PORT:?MSP_PORTAL_PORT is required}
+      - MSP_PORTAL_TIMEOUT=${MSP_PORTAL_TIMEOUT:?MSP_PORTAL_TIMEOUT is required}
+      - MSP_PORTAL_LOG_LEVEL=${MSP_PORTAL_LOG_LEVEL:?MSP_PORTAL_LOG_LEVEL is required}
+    entrypoint: /entrypoint.sh gunicorn
+  rqscheduler:
+    image: filewave/msp_portal:latest
+    restart: always
+    depends_on:
+      - "redis"
+    links:
+      - "redis:redis"
+    volumes:
+      - ${MSP_PORTAL_DB_HOST_LOCATION:?MSP_PORTAL_DB_HOST_LOCATION is required}:/app/msp_portal/msp_portal_db/
+    environment:
+      - DJANGO_SETTINGS_MODULE=${MSP_PORTAL_DJANGO_SETTINGS_MODULE:?MSP_PORTAL_DJANGO_SETTINGS_MODULE is required}
+      - MSP_PORTAL_PORT=${MSP_PORTAL_PORT:?MSP_PORTAL_PORT is required}
+      - MSP_PORTAL_TIMEOUT=${MSP_PORTAL_TIMEOUT:?MSP_PORTAL_TIMEOUT is required}
+      - MSP_PORTAL_LOG_LEVEL=${MSP_PORTAL_LOG_LEVEL:?MSP_PORTAL_LOG_LEVEL is required}
+    entrypoint: /entrypoint.sh rqscheduler
+  rqworker:
+    image: filewave/msp_portal:latest
+    restart: always
+    depends_on:
+      - "redis"
+    links:
+      - "redis:redis"
+    volumes:
+      - ${MSP_PORTAL_DB_HOST_LOCATION:?MSP_PORTAL_DB_HOST_LOCATION is required}:/app/msp_portal/msp_portal_db/
+    environment:
+      - DJANGO_SETTINGS_MODULE=${MSP_PORTAL_DJANGO_SETTINGS_MODULE:?MSP_PORTAL_DJANGO_SETTINGS_MODULE is required}
+      - MSP_PORTAL_PORT=${MSP_PORTAL_PORT:?MSP_PORTAL_PORT is required}
+      - MSP_PORTAL_TIMEOUT=${MSP_PORTAL_TIMEOUT:?MSP_PORTAL_TIMEOUT is required}
+      - MSP_PORTAL_LOG_LEVEL=${MSP_PORTAL_LOG_LEVEL:?MSP_PORTAL_LOG_LEVEL is required}
+    entrypoint: /entrypoint.sh rqworker
+  redis:
+    image: redis:4.0.13-alpine3.9
+    restart: always
