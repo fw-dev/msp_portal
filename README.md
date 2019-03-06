@@ -106,4 +106,16 @@ Q: Who can use it?
 A: The intent is to target Managed Service Providers, but there isn’t a technical limitation that enforces this. Anyone who needs to handle multiple FileWave instances can benefit from using the portal.
 
 Q: How do I add my FileWave Servers to the portal?  
-A: Go to **_Servers_** and press **_Add Server_**.
+A: Go to **_Servers_**, press **_Add Server_** and enter all required information.
+
+Q: What is supposed to happen when I add a server to my portal?  
+A: Server will be displayed in the portal. There will be no operations done on the added FileWave Server.
+
+Q: What is the recommended hardware to run the portal?  
+A: Commodity hardware is good enough.
+
+Q: Where is the information about servers (hostname, description, FileWave administrator username and password stored)?  
+A: On the machine which is hosting your instance of the portal. Sensitive data like usernames and passwords are only used to automatically log into FileWave Server when Launch FileWave Admin feature is used.
+
+Q: How often is online and version information updated?  
+A: Every minute.
