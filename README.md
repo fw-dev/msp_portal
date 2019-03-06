@@ -63,21 +63,15 @@ Creating msp_portal_rqscheduler_1 ... done
 Creating msp_portal_rqworker_1    ... done
 Creating msp_portal_gunicorn_1    ... done
 ```
-* Create super user account.
-  * Open shell in `msp_portal_gunicorn_1` container by executing `docker-compose exec gunicorn /bin/sh` command.
-  ```
-  $ docker-compose exec gunicorn /bin/sh
-  /app #
-  ```
-  * Execute `python /app/msp_portal/manage.py createsuperuser` command and follow prompts.
-  ```
-  /app # python /app/msp_portal/manage.py createsuperuser
-  Username (leave blank to use 'root'): fwadmin
-  Email address:
-  Password:
-  Password (again):
-  Superuser created successfully.
-  ```
+* Create super user account with `docker-compose exec gunicorn /usr/local/bin/python /app/msp_portal/manage.py createsuperuser` command and follow prompts.
+```
+$ docker-compose exec gunicorn /usr/local/bin/python /app/msp_portal/manage.py createsuperuser
+Username (leave blank to use 'root'): fwadmin
+Email address:
+Password:
+Password (again):
+Superuser created successfully.
+```
 * Test deployment entering hostname (`MSP_PORTAL_HOSTNAME`) and port 8000 in your browser (e.g. http://192.168.0.102:8000/). Please note that this is `http` not `https`. Log in with super user credentials.
 
 Congratulations! You successfully finished the deployment.
