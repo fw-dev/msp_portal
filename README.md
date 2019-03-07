@@ -1,6 +1,6 @@
 # MSP Portal
 
-The product is directed to Managed Service Providers who are maintaining multiple FileWave Server instances in their environments.
+The solution is directed to Managed Service Providers who are maintaining multiple FileWave Server instances in their environments.
 
 The MSP Portal currently allows an administrator to:
 * Catalog FileWave Servers.
@@ -30,19 +30,20 @@ docker-compose version 1.23.2, build 1110ad01
 * Minimum support version of FileWave Server that is able to provide online status and its current version is 13.0.0.
 * Launching FileWave Admin from the MSP Portal will only work with compatible versions of FileWave Servers. FileWave Admin installed on your machine must be compatible with FileWave Server you're trying to connect to. Minimum supported version of FileWave Admin for this feature is 12.9.0.
 * Enabling Kubernetes on the machine hosting the portal will very likely break the networking inside portal's containers. Please ensure that Kubernetes is disabled.
+* All `docker-compose` commands require to be executed from the directory where MSP Portal release is unpacked.
 
 ### Installing
 
-Following steps must be executed only once, during initial deployment of the product. For upgrade instruction please refer to 'Upgrading' section.
+Following steps must be executed only once, during initial deployment of the solution. For upgrade instruction please refer to 'Upgrading' section.
 
 * Download and unpack the newest [release](https://github.com/fw-dev/msp_portal/releases) of MSP Portal.
 * Ensure that `MSP_PORTAL_DB_HOST_LOCATION` location exists on the machine which will host the portal.
 * Go to the location where MSP Portal release is unpacked.
-* Open `.env` file in text editor and provide following required configuration options.
+* Open `.env` file in text editor and provide following required configuration options. Please note that filename starts with `.` hence the file is considered as hidden on Linux and macOS platforms.
   * `MSP_PORTAL_DB_HOST_LOCATION`
   * `MSP_PORTAL_HOSTNAME`
   * `MSP_PORTAL_DJANGO_SECRET_KEY`
-* Start the product by executing `docker-compose -f docker-compose.yml -f docker-compose_production.yml up -d` command.
+* Start the solution by executing `docker-compose -f docker-compose.yml -f docker-compose_production.yml up -d` command.
 ```
 $ docker-compose -f docker-compose.yml -f docker-compose_production.yml up -d
 Pulling gunicorn (filewave/msp_portal:dev-0.1.0)...
@@ -94,7 +95,7 @@ This section will describe steps to perform to upgrade from one version to anoth
 
 ## Frequently Asked Questions (FAQ)
 Q: Why are we creating MSP Portal?  
-A: FileWave would like to improve the ability of managed service providers to sell their solutions to their end customers.
+A: FileWave would like to improve the ability of Managed Service Providers to manage multiple instances of FileWave Servers for their end customers.
 
 Q: Who can use it?  
 A: The intent is to target Managed Service Providers, but there isn’t a technical limitation that enforces this. Anyone who needs to handle multiple FileWave instances can benefit from using the portal.
@@ -116,3 +117,6 @@ A: On the machine which is hosting your instance of the portal. Sensitive data l
 
 Q: How often is online and version information updated?  
 A: Every minute.
+
+Q: How do I stop the solution?  
+A: You can stop the portal by executing `docker-compose down` command.
