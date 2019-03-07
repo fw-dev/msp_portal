@@ -9,21 +9,15 @@ The MSP Portal currently allows an administrator to:
 
 ## Getting Started
 
-These instructions will help you deploy the project to production environment.
+These instructions will help you deploy the project to production environment. Before starting with first command to deploy the solution please make sure that you read whole instruction.
 
 ### Prerequisites
 
 * Basic knowledge and hands-on experience with Docker and Docker Compose.
 * Machine in your data center running up-to-date Docker and Docker Compose.
-```
-$ docker --version
-Docker version 18.09.3, build 774a1f4
-
-$ docker-compose --version
-docker-compose version 1.23.2, build 1110ad01
-```
 * Location on this machine where internal database and log files will be persisted (later referred as `MSP_PORTAL_DB_HOST_LOCATION`).
-* External, off the machine backup of `MSP_PORTAL_DB_HOST_LOCATION` contents.
+  * (**Windows only**) Depending on your Docker settings the location will most likely have to be inside your local user directory (e.g. `C:\Users\admin\`).
+* External, off the machine backup of `MSP_PORTAL_DB_HOST_LOCATION` location and `.env` file contents. You are responsible for configuring and managing backups, FileWave will not help you recovering lost MSP Portal data.
 * (Optional) SSL certificate matching machine's host name in order to enable HTTPS communication.
 
 ### Important notes
@@ -36,14 +30,14 @@ docker-compose version 1.23.2, build 1110ad01
 
 Following steps must be executed only once, during initial deployment of the solution. For upgrade instruction please refer to 'Upgrading' section.
 
-* Download and unpack the newest [release](https://github.com/fw-dev/msp_portal/releases) of MSP Portal.
-* Ensure that `MSP_PORTAL_DB_HOST_LOCATION` location exists on the machine which will host the portal.
-* Go to the location where MSP Portal release is unpacked.
-* Open `.env` file in text editor and provide following required configuration options. Please note that filename starts with `.` hence the file is considered as hidden on Linux and macOS platforms.
-  * `MSP_PORTAL_DB_HOST_LOCATION`
-  * `MSP_PORTAL_HOSTNAME`
-  * `MSP_PORTAL_DJANGO_SECRET_KEY`
-* Start the solution by executing `docker-compose -f docker-compose.yml -f docker-compose_production.yml up -d` command.
+1. Download and unpack the newest [release](https://github.com/fw-dev/msp_portal/releases) of MSP Portal.
+2. Ensure that `MSP_PORTAL_DB_HOST_LOCATION` location exists on the machine which will host the portal.
+3. Go to the location where MSP Portal release is unpacked.
+4. Open `.env` file in text editor and provide following required configuration options. Please note that filename starts with `.` hence the file is considered as hidden on Linux and macOS platforms.
+   * `MSP_PORTAL_DB_HOST_LOCATION`
+   * `MSP_PORTAL_HOSTNAME`
+   * `MSP_PORTAL_DJANGO_SECRET_KEY`
+5. Start the solution by executing following `docker-compose` command.
 ```
 $ docker-compose -f docker-compose.yml -f docker-compose_production.yml up -d
 Pulling gunicorn (filewave/msp_portal:dev-0.1.0)...
@@ -64,7 +58,7 @@ Creating msp_portal_rqscheduler_1 ... done
 Creating msp_portal_rqworker_1    ... done
 Creating msp_portal_gunicorn_1    ... done
 ```
-* Create super user account with `docker-compose exec gunicorn /usr/local/bin/python /app/msp_portal/manage.py createsuperuser` command and follow prompts.
+6. Create super user account with following `docker-compose` command and follow prompts. You'll be asked for super user username, email address (optional) and password twice.
 ```
 $ docker-compose exec gunicorn /usr/local/bin/python /app/msp_portal/manage.py createsuperuser
 Username (leave blank to use 'root'): fwadmin
@@ -73,7 +67,7 @@ Password:
 Password (again):
 Superuser created successfully.
 ```
-* Test deployment entering hostname (`MSP_PORTAL_HOSTNAME`) and port 8000 in your browser (e.g. http://192.168.0.102:8000/). Please note that this is `http` not `https`. Log in with super user credentials.
+7. Test deployment entering hostname (`MSP_PORTAL_HOSTNAME`) and port 8000 in your browser (e.g. http://192.168.0.102:8000/). Please note that this is `http` not `https`. Log in with super user credentials.
 
 Congratulations! You successfully finished the deployment.
 
@@ -92,6 +86,9 @@ You can test HTTPS configuration by entering hostname (`MSP_PORTAL_HOSTNAME`) an
 ## Upgrading
 
 This section will describe steps to perform to upgrade from one version to another.
+
+## Known issues
+* FileWave Admin may be able to connect to incompatible version of FileWave Server. If FileWave Admin opens despite displaying the message about version incompatibility please close it. The possible results of interaction between incompatible versions of FileWave Admin and FileWave Server are undefined.
 
 ## Frequently Asked Questions (FAQ)
 Q: Why are we creating MSP Portal?  
