@@ -117,3 +117,6 @@ A: Every minute.
 
 Q: How do I stop the solution?  
 A: You can stop the portal by executing `docker-compose down` command.
+
+Q: How do I remove the solution?
+A: First, you need to stop the solution. Remove MSP Portal release directory. Remove the location where internal database and log files were persisted (`MSP_PORTAL_DB_HOST_LOCATION`).
