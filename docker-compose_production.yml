@@ -1,19 +1,19 @@
 version: '3'
 services:
   gunicorn:
-    image: filewave/msp_portal:0.1.0
+    image: filewave/msp_portal:1.0.0
     environment:
       - MSP_PORTAL_KEYFILE=${MSP_PORTAL_KEYFILE}
       - MSP_PORTAL_CERTFILE=${MSP_PORTAL_CERTFILE}
       - MSP_PORTAL_DJANGO_SECRET_KEY=${MSP_PORTAL_DJANGO_SECRET_KEY:?MSP_PORTAL_DJANGO_SECRET_KEY is required}
       - MSP_PORTAL_HOSTNAME=${MSP_PORTAL_HOSTNAME:?MSP_PORTAL_HOSTNAME is required}
   rqscheduler:
-    image: filewave/msp_portal:0.1.0
+    image: filewave/msp_portal:1.0.0
     environment:
       - MSP_PORTAL_DJANGO_SECRET_KEY=${MSP_PORTAL_DJANGO_SECRET_KEY:?MSP_PORTAL_DJANGO_SECRET_KEY is required}
       - MSP_PORTAL_HOSTNAME=${MSP_PORTAL_HOSTNAME:?MSP_PORTAL_HOSTNAME is required}
   rqworker:
-    image: filewave/msp_portal:0.1.0
+    image: filewave/msp_portal:1.0.0
     environment:
       - MSP_PORTAL_DJANGO_SECRET_KEY=${MSP_PORTAL_DJANGO_SECRET_KEY:?MSP_PORTAL_DJANGO_SECRET_KEY is required}
       - MSP_PORTAL_HOSTNAME=${MSP_PORTAL_HOSTNAME:?MSP_PORTAL_HOSTNAME is required}
