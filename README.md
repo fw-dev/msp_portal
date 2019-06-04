@@ -95,9 +95,7 @@ You can test HTTPS configuration by entering hostname (`MSP_PORTAL_HOSTNAME`) an
 ### Configuring status and license information of FileWave Servers
 Version 1.1 introduced new functionality to display status and license information of your FileWave Servers directly in the MSP Portal.
 
-In order to enable this feature, you need to provide application token for each of your FileWave Servers in the portal.
-* If only status information is needed then you need to get an application token from an administrator account with 'Access Dashboard' permission.
-* If both status and license information is needed then you need to get an application token from a super administrator account.
+In order to enable this feature, you need to provide super administrator application token for each of your FileWave Servers in the portal.
 
 In order to enter an application token for a server you need to go Servers view in MSP Portal, click on the server's hostname. You'll be taken to the page where you can enter the application token. After application token is entered, make sure to press 'Save'.
 
