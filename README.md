@@ -149,10 +149,11 @@ A: First, you need to stop the solution. Remove MSP Portal release directory. Re
 **Version 1.0 (06.03.2019)**  
 Initial release.
 
-**Version 1.1 (??.??.2019)**  
+**Version 1.1 (04.06.2019)**  
 New features
 * Display used and total license information for FileWave Servers. (RAC-14)
 * Display status information for FileWave Servers. (RAC-21)
+* Collect statistics about FileWave Servers. (RAC-6)
 
 Bug fixes
 * Logging in to FileWave Admin with MSP Portal link will no longer log out other FileWave Admin sessions of the same user. (RAC-30)
