@@ -4,8 +4,12 @@ The solution is directed to Managed Service Providers who are maintaining multip
 
 The MSP Portal currently allows an administrator to:
 * Catalog FileWave Servers.
-* Monitor the status and display FileWave Server revision.
+* Monitor the online status and display FileWave Server revision.
 * Launch FileWave Admin directly from the MSP Portal.
+* Display the dashboard status of your FileWave Servers.
+* Display information about licenses of your FileWave Servers.
+
+The MSP Portal is also gathering general statistics about usage of the solution. The statistics are sent in a secure way to FileWave's analytics platform.
 
 ## Getting Started
 
@@ -19,12 +23,16 @@ These instructions will help you deploy the project to production environment. B
   * (**Windows only**) Depending on your Docker settings the location will most likely have to be inside your local user directory (e.g. `C:\Users\admin\`).
 * External, off the machine backup of `MSP_PORTAL_DB_HOST_LOCATION` location and `.env` file contents. You are responsible for configuring and managing backups, FileWave will not help you recovering lost MSP Portal data.
 * (Optional) SSL certificate matching machine's host name in order to enable HTTPS communication.
+* In order to have all functionality available network must be configured to allow communication on following ports:
+  * 443, 20445: between machine running MSP Portal and FileWave Servers.
+  * 443: between machine running MSP Portal and public internet.
 
 ### Important notes
 * Minimum support version of FileWave Server that is able to provide online status and its current version is 13.0.0.
 * Launching FileWave Admin from the MSP Portal will only work with compatible versions of FileWave Servers. FileWave Admin installed on your machine must be compatible with FileWave Server you're trying to connect to. Minimum supported version of FileWave Admin for this feature is 12.9.0.
 * Enabling Kubernetes on the machine hosting the portal will very likely break the networking inside portal's containers. Please ensure that Kubernetes is disabled.
 * All `docker-compose` commands require to be executed from the directory where MSP Portal release is unpacked.
+* Not configuring HTTPS will leave you vulnerable because all the secret information (e.g FileWave Admin account credentials, application token) will be sent over network in not encrypted form. We strongly advise to configure HTTPS.
 
 ### Installing
 
@@ -83,9 +91,25 @@ If your deployment is already running you need to restart it by executing `docke
 
 You can test HTTPS configuration by entering hostname (`MSP_PORTAL_HOSTNAME`) and port 8000 in your browser using HTTPS schema (e.g. https://192.168.0.102:8000). Please note that this is `https` not `http`.
 
+
+### Configuring status and license information of FileWave Servers
+Version 1.1 introduced new functionality to display status and license information of your FileWave Servers directly in the MSP Portal.
+
+In order to enable this feature, you need to provide super administrator application token for each of your FileWave Servers in the portal.
+
+In order to enter an application token for a server you need to go Servers view in MSP Portal, click on the server's hostname. You'll be taken to the page where you can enter the application token. After application token is entered, make sure to press 'Save'.
+
+To know more about application tokens please refer to [Managing FileWave Administrators](https://kb.filewave.com/display/MAN/2.15.++Managing+FileWave+Administrators) page in FileWave Manual.
+
 ## Upgrading
 
-This section will describe steps to perform to upgrade from one version to another.
+Before upgrading make sure you have backup of files in `MSP_PORTAL_DB_HOST_LOCATION` location.
+
+### From 1.0 to 1.1
+1. Go to the location where MSP Portal previous release (1.0) was unpacked and stop the solution (by executing `docker-compose down` command).
+2. Download and unpack the newest [release](https://github.com/fw-dev/msp_portal/releases) (1.1) of MSP Portal.
+3. Copy `.env` file from previous release location to new release location. There is no new environment configuration options so we can copy a file instead of migrating the current configuration to the new version of `.env` file.
+4. Start the new release of MSP Portal (by executing `docker-compose -f docker-compose.yml -f docker-compose_production.yml up -d` command).
 
 ## Known issues
 * FileWave Admin may be able to connect to incompatible version of FileWave Server. If FileWave Admin opens despite displaying the message about version incompatibility please close it. The possible results of interaction between incompatible versions of FileWave Admin and FileWave Server are undefined.
@@ -120,3 +144,16 @@ A: You can stop the portal by executing `docker-compose down` command.
 
 Q: How do I remove the solution?
 A: First, you need to stop the solution. Remove MSP Portal release directory. Remove the location where internal database and log files were persisted (`MSP_PORTAL_DB_HOST_LOCATION`).
+
+## Release Notes
+**Version 1.0 (06.03.2019)**  
+Initial release.
+
+**Version 1.1 (04.06.2019)**  
+New features
+* Display used and total license information for FileWave Servers. (RAC-14)
+* Display status information for FileWave Servers. (RAC-21)
+* Collect statistics about FileWave Servers. (RAC-6)
+
+Bug fixes
+* Logging in to FileWave Admin with MSP Portal link will no longer log out other FileWave Admin sessions of the same user. (RAC-30)
