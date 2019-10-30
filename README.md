@@ -93,7 +93,7 @@ You can test HTTPS configuration by entering hostname (`MSP_PORTAL_HOSTNAME`) an
 
 
 ### Configuring status and license information of FileWave Servers
-Version 1.1 introduced new functionality to display status and license information of your FileWave Servers directly in the MSP Portal.
+Version 1.1.0 introduced new functionality to display status and license information of your FileWave Servers directly in the MSP Portal.
 
 In order to enable this feature, you need to provide super administrator application token for each of your FileWave Servers in the portal.
 
@@ -105,11 +105,14 @@ To know more about application tokens please refer to [Managing FileWave Adminis
 
 Before upgrading make sure you have backup of files in `MSP_PORTAL_DB_HOST_LOCATION` location.
 
-### From 1.0 to 1.1
-1. Go to the location where MSP Portal previous release (1.0) was unpacked and stop the solution (by executing `docker-compose down` command).
-2. Download and unpack the newest [release](https://github.com/fw-dev/msp_portal/releases) (1.1) of MSP Portal.
+### From 1.0.0 to 1.1.0
+1. Go to the location where MSP Portal previous release (1.0.0) was unpacked and stop the solution (by executing `docker-compose down` command).
+2. Download and unpack the newest [release](https://github.com/fw-dev/msp_portal/releases) (1.1.0) of MSP Portal.
 3. Copy `.env` file from previous release location to new release location. There is no new environment configuration options so we can copy a file instead of migrating the current configuration to the new version of `.env` file.
 4. Start the new release of MSP Portal (by executing `docker-compose -f docker-compose.yml -f docker-compose_production.yml up -d` command).
+
+### From 1.1.0 to 1.1.1
+Please follow the steps as you would upgrade from 1.0.0 to 1.1.0 but download the newest [release](https://github.com/fw-dev/msp_portal/releases) (1.1.1) of MSP Portal.
 
 ## Known issues
 * FileWave Admin may be able to connect to incompatible version of FileWave Server. If FileWave Admin opens despite displaying the message about version incompatibility please close it. The possible results of interaction between incompatible versions of FileWave Admin and FileWave Server are undefined.
@@ -146,10 +149,10 @@ Q: How do I remove the solution?
 A: First, you need to stop the solution. Remove MSP Portal release directory. Remove the location where internal database and log files were persisted (`MSP_PORTAL_DB_HOST_LOCATION`).
 
 ## Release Notes
-**Version 1.0 (06.03.2019)**  
+**Version 1.0.0 (06.03.2019)**  
 Initial release.
 
-**Version 1.1 (04.06.2019)**  
+**Version 1.1.0 (04.06.2019)**  
 New features
 * Display used and total license information for FileWave Servers. (RAC-14)
 * Display status information for FileWave Servers. (RAC-21)
@@ -157,3 +160,7 @@ New features
 
 Bug fixes
 * Logging in to FileWave Admin with MSP Portal link will no longer log out other FileWave Admin sessions of the same user. (RAC-30)
+
+**Version 1.1.1 (30.10.2019)**  
+Bug fixes
+* Fixed an issue in which servers' administrator password field would be displayed for users not having appropriate permissions to see so. (RAC-84)
